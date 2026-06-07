@@ -76,8 +76,7 @@ class QApplicationMessaging(QApplication):
     def loadTranslations(self):
         from PySide6.QtCore import QTranslator
         translator = QTranslator(self)
-        qm_path = os.path.join(os.getcwd(), "locale", "zh_CN.qm")
-        if translator.load(qm_path):
+        if translator.load(":/Locale/locale/zh_CN.qm"):
             self.installTranslator(translator)
             print("✅ 中文翻译加载成功！")
         else:
