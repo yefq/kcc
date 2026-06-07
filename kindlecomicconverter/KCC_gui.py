@@ -55,6 +55,7 @@ class QApplicationMessaging(QApplication):
 
     def __init__(self, argv):
         QApplication.__init__(self, argv)
+        self.loadTranslations()
         self._key = 'KCC'
         self._timeout = 1000
         self._locked = False
@@ -71,6 +72,16 @@ class QApplicationMessaging(QApplication):
     def __del__(self):
         if not self._locked:
             self._server.close()
+
+    def loadTranslations(self):
+        from PySide6.QtCore import QTranslator
+        translator = QTranslator(self)
+        qm_path = os.path.join(os.getcwd(), "locale", "zh_CN.qm")
+        if translator.load(qm_path):
+            self.installTranslator(translator)
+            print("✅ 中文翻译加载成功！")
+        else:
+            print("❌ 翻译加载失败")
 
     def event(self, e):
         if e.type() == QEvent.Type.FileOpen:
